@@ -105,7 +105,7 @@ namespace SysShopDAO.Implementation
             query = @"UPDATE usuario SET ci=@ci, nombres=@nombres, primerApellido=@primerApellido, segundoApellido=@segundoApellido, 
                      fechaNacimiento=@fechaNacimiento, sexo=@sexo, rol=@rol, nombreUsuario=@nombreUsuario, contrasenia=@contrasenia, 
                      fechaActualizacion=CURRENT_TIMESTAMP
-                  WHERE idUsuario=@idUsuario";
+                  WHERE id=@id";
 
             MySqlCommand command = CreateBasicCommand(this.query);
             command.Parameters.AddWithValue("@ci", t.Ci);
@@ -117,7 +117,7 @@ namespace SysShopDAO.Implementation
             command.Parameters.AddWithValue("@rol", t.Rol);
             command.Parameters.AddWithValue("@nombreUsuario", t.NombreUsuario);
             command.Parameters.AddWithValue("@contrasenia", t.Contrasenia);
-            command.Parameters.AddWithValue("@idUsuario", t.Id);
+            command.Parameters.AddWithValue("@id", t.Id);
 
             return BaseExecuteNonQuery(command);
         }
@@ -213,14 +213,14 @@ namespace SysShopDAO.Implementation
             return ExecuteDataTable(command);
         }
 
-        public int CambiarContrasenia(byte idUsuario, string nuevaContrasenia)
+        public int CambiarContrasenia(byte id, string nuevaContrasenia)
         {
             query = @"UPDATE usuario SET contrasenia = MD5(@nuevaContrasenia)
-              WHERE id = @idUsuario";
+              WHERE id = @id";
 
             MySqlCommand command = CreateBasicCommand(query);
             command.Parameters.AddWithValue("@nuevaContrasenia", nuevaContrasenia);
-            command.Parameters.AddWithValue("@idUsuario", idUsuario);
+            command.Parameters.AddWithValue("@id", id);
 
            return BaseExecuteNonQuery(command);
         }
